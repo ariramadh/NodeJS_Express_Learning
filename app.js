@@ -21,19 +21,32 @@ const connection = mysql.createConnection({
 
 connection.connect()
 
-function open(){
-    var sql = "INSERT INTO student (id, fname, lname, id_number) VALUES ('6', 'Ari', 'Ramadhani', '2021')"
-    connection.query(sql, (err, result, fields) => {
-        if (err) throw err;
-            console.log("Insert success!!");
-      })    
-}
+open()
+add('Yesi','Komalasari','1207')
+open()
+del(1207)
+open()
 
 function open(){
     connection.query('SELECT * FROM student', (err, result, fields) => {
         if (err) throw err;
       //   console.log(result);
         console.log(jsonToTable(result));
+      })
+}
+
+function add(fname,lname,id_number){
+    var sql = "INSERT INTO student (fname, lname, id_number) VALUES (?)"
+    connection.query(sql, [[fname, lname, id_number]], (err, result, fields) => {
+        if (err) throw err;
+            console.log("Insert success!!");
+      })    
+}
+
+function del(id_number){
+    connection.query('DELETE FROM student WHERE id_number =  ?', id_number, (err, result, fields) => {
+        if (err) throw err;
+            console.log("Delete success!!");
       })
 }
 
