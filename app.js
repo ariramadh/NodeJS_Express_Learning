@@ -1,15 +1,17 @@
 const express = require('express')
 const app = express()
+const path = require('path');
 const port = 3000
 const jsonToTable = require('json-to-table'); 
-
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
+const { result } = require('lodash');
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname+'/index.html'));
+  });
 
 const mysql = require('mysql')
 const connection = mysql.createConnection({
@@ -21,18 +23,24 @@ const connection = mysql.createConnection({
 
 connection.connect()
 
-open()
-add('Yesi','Komalasari','1207')
-open()
-del(1207)
-open()
+//open();
+// add('Yesi','Komalasari','1207')
+// open()
+// del(1207)
+// open()
 
 function open(){
     connection.query('SELECT * FROM student', (err, result, fields) => {
         if (err) throw err;
       //   console.log(result);
         console.log(jsonToTable(result));
-      })
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
+
+      });
+
+      return result();
 }
 
 function add(fname,lname,id_number){
